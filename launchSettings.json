@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "dario.robles.order.service": "StartDebugging",
+        "dario.robles.security.service": "StartDebugging",
+        "dario.robles.store.service": "StartDebugging"
+      }
+    }
+  }
+}

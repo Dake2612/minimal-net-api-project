@@ -1,0 +1,42 @@
+version: '3.4'
+
+services:
+  dario.robles.store.service:
+    image: ${DOCKER_REGISTRY-}darioroblesstoreservice
+    container_name: store.service
+    ports:
+      - 8082:8080
+      - 8083:443
+    build:
+      context: .
+      dockerfile: Backend/Domain/Store/Dario.Robles.Store.Service/Dockerfile
+    networks:
+      - backend
+  dario.robles.security.service:
+    image: ${DOCKER_REGISTRY-}darioroblessecurityservice
+    container_name: security.service
+    ports:
+      - 8084:8080
+      - 8085:443
+    build:
+      context: .
+      dockerfile: Backend/Infraestructure/Security/Dockerfile
+    networks:
+      - backend
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password1234
+    ports:
+      - 1434:1433
+    networks:
+      - backend
+  
+
+networks:
+    backend:
+      name: backend
+      driver: bridge
+

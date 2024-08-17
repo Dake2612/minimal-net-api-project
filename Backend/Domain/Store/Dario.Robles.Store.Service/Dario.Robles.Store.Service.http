@@ -1,0 +1,6 @@
+@Dario.Robles.Store.Service_HostAddress = http://localhost:5209
+
+GET {{Dario.Robles.Store.Service_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
