@@ -2,6 +2,7 @@
 using Dario.Robles.Store.Service.Infrastructure.Http.Helpers.LinksBuilders.Base;
 using Dario.Robles.Store.Service.Infrastructure.Persistence.Helpers.Paged;
 using Dario.Robles.Store.Service.Domain.Orders.Entities;
+using System.Dynamic;
 
 namespace Dario.Robles.Store.Service.Infrastructure.Http.Helpers.LinksBuilders
 {
@@ -27,6 +28,7 @@ namespace Dario.Robles.Store.Service.Infrastructure.Http.Helpers.LinksBuilders
                     return _linkGenerator.GetUriByName(_httpContextAccessor.HttpContext, "GetOrders",
                       new
                       {                          
+                          fields = ordersResourceParameters.Fields,
                           orderBy = ordersResourceParameters.OrderBy,
                           searchQuery = ordersResourceParameters.SearchQuery,
                           state = ordersResourceParameters.State,
@@ -36,7 +38,8 @@ namespace Dario.Robles.Store.Service.Infrastructure.Http.Helpers.LinksBuilders
                 case ResourceUriType.NextPage:
                     return _linkGenerator.GetUriByName(_httpContextAccessor.HttpContext, "GetOrders",
                       new
-                      {                          
+                      {
+                          fields = ordersResourceParameters.Fields,
                           orderBy = ordersResourceParameters.OrderBy,
                           searchQuery = ordersResourceParameters.SearchQuery,
                           state = ordersResourceParameters.State,
@@ -47,7 +50,8 @@ namespace Dario.Robles.Store.Service.Infrastructure.Http.Helpers.LinksBuilders
                 default:
                     return _linkGenerator.GetUriByName(_httpContextAccessor.HttpContext, "GetOrders",
                     new
-                    {                        
+                    {
+                        fields = ordersResourceParameters.Fields,
                         orderBy = ordersResourceParameters.OrderBy,
                         searchQuery = ordersResourceParameters.SearchQuery,
                         state = ordersResourceParameters.State,
@@ -69,6 +73,58 @@ namespace Dario.Robles.Store.Service.Infrastructure.Http.Helpers.LinksBuilders
             };
 
             return paginationMetadata;
-        }                 
+        }
+        public IEnumerable<LinkDto> CreatePagedLinksForOrders(OrdersResourceParameters ordersResourceParameters, bool hasNext, bool hasPrevious)
+        {
+            var links = new List<LinkDto>
+            {
+                // self 
+                new LinkDto(CreateOrdersResourceUri(ordersResourceParameters, ResourceUriType.Current), "self", "GET")
+            };
+
+            if (hasNext)
+            {
+                links.Add(new LinkDto(CreateOrdersResourceUri(ordersResourceParameters, ResourceUriType.NextPage), "nextPage", "GET"));
+            }
+
+            if (hasPrevious)
+            {
+                links.Add(new LinkDto(CreateOrdersResourceUri(ordersResourceParameters, ResourceUriType.PreviousPage), "previousPage", "GET"));
+            }
+
+            return links;
+        }
+        public IEnumerable<IDictionary<string, object>> CreateDocumentationLinksForOrderShapeData(IEnumerable<ExpandoObject> shapedOrders, OrdersResourceParameters ordersResourceParameters)
+        {
+            var shapedOrdersWithLinks = shapedOrders.Select(order =>
+            {
+                IDictionary<string, object> orderAsDictionary = new Dictionary<string, object>((order as IDictionary<string, object>));
+                var orderLinks = CreateDocumentationLinksForOrder((Guid)orderAsDictionary["OrderId"], ordersResourceParameters.Fields);
+                orderAsDictionary.Add("links", orderLinks);
+
+                return orderAsDictionary;
+            });
+
+            return shapedOrdersWithLinks.ToList();
+        }
+
+        public List<LinkDto> CreateDocumentationLinksForOrder(Guid orderId, string fields)
+        {
+            var links = new List<LinkDto>();
+
+            if (string.IsNullOrWhiteSpace(fields))
+            {
+                links.Add(new LinkDto(_linkGenerator.GetUriByName(_httpContextAccessor.HttpContext, "GetOrder", new { orderId }), "self", "GET"));
+            }
+            else
+            {
+                links.Add(new LinkDto(_linkGenerator.GetUriByName(_httpContextAccessor.HttpContext, "GetOrder", new { orderId, fields }), "self", "GET"));
+            }
+
+            links.Add(new LinkDto(_linkGenerator.GetUriByName(_httpContextAccessor.HttpContext, "DeleteOrder", new { orderId }), "delete_order", "DELETE"));
+            links.Add(new LinkDto(_linkGenerator.GetUriByName(_httpContextAccessor.HttpContext, "UpdateOrder", new { orderId }), "update_order", "PUT"));
+
+            return links;
+        }
     }
 }

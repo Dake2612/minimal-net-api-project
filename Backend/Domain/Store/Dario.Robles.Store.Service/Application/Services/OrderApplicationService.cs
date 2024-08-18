@@ -3,6 +3,8 @@ using Dario.Robles.Store.Service.Application.Dtos;
 using Dario.Robles.Store.Service.Application.Interfaces;
 using Dario.Robles.Store.Service.Domain.Orders.Entities;
 using Dario.Robles.Store.Service.Infraestructure.http.Results.Orders;
+using Dario.Robles.Store.Service.Infrastructure.Http.Helpers.LinksBuilders.Base;
+using Dario.Robles.Store.Service.Infrastructure.Persistence.Extensions;
 using System.ComponentModel.DataAnnotations;
 
 namespace Dario.Robles.Store.Service.Application.Services
@@ -12,13 +14,18 @@ namespace Dario.Robles.Store.Service.Application.Services
         public async Task<GetOrdersResult> GetOrdersAsync(OrdersResourceParameters ordersResourceParameters)
         {
             GetOrdersResult result = new();
+            _validationService.ValidateOrderResourceParameters(ordersResourceParameters);
             var ordersFromRepo = await _unitOfWork.Orders.GetOrdersAsync(ordersResourceParameters);
-            result.Orders = _mapper.Map<List<OrderDto>>(ordersFromRepo);
+            var orders = _mapper.Map<IEnumerable<OrderDto>>(ordersFromRepo);
+            result.ShapedOrders = orders.ShapeData(ordersResourceParameters.Fields);
             result.PaginationMetadata = _storeLinksBuilder.GetPaginationMetadata(ordersFromRepo, ordersResourceParameters);
+            var links = _storeLinksBuilder.CreatePagedLinksForOrders(ordersResourceParameters, ordersFromRepo.HasNext, ordersFromRepo.HasPrevious);
+            var shapedOrdersWithLinks = _storeLinksBuilder.CreateDocumentationLinksForOrderShapeData(result.ShapedOrders, ordersResourceParameters);
+            result.LinkedCollectionResource = new LinkedCollectionResource { Value = shapedOrdersWithLinks, Links = links };
             return result;
         }
 
-        public async Task<GetOrderByOrderIdResult> GetOrderByOrderIdAsync(Guid orderId)
+        public async Task<GetOrderByOrderIdResult> GetOrderByOrderIdAsync(Guid orderId, string fields)
         {
             GetOrderByOrderIdResult result = new();
             var orderFromRepo = await _unitOfWork.Orders.GetOrderAsync(orderId);
@@ -26,8 +33,13 @@ namespace Dario.Robles.Store.Service.Application.Services
             {
                 return null;
             }
+            var order = _mapper.Map<OrderDto>(orderFromRepo);
+            result.ShapedOrder = order.ShapeData(fields);
 
-            result.Order = _mapper.Map<OrderDto>(orderFromRepo);
+            var links = _storeLinksBuilder.CreateDocumentationLinksForOrder(orderId, fields);
+            result.LinkedResource = new Dictionary<string, object>(result.ShapedOrder);
+            result.LinkedResource.Add("links", links);
+
             return result;
         }
 
@@ -49,9 +61,14 @@ namespace Dario.Robles.Store.Service.Application.Services
             {
                 throw new Exception("Creating an Order failed on save.");
             }
-
-            result.Order = _mapper.Map<OrderDto>(orderEntity);
+            var orderToReturn = _mapper.Map<OrderDto>(orderEntity);
+            result.ShapedOrder = orderToReturn.ShapeData(null);
             result.Success = true;
+
+            var links = _storeLinksBuilder.CreateDocumentationLinksForOrder(orderToReturn.OrderId, null);
+            result.LinkedResource = new Dictionary<string, object>(result.ShapedOrder);
+            result.LinkedResource.Add("links", links);
+
             return result;
         }
 

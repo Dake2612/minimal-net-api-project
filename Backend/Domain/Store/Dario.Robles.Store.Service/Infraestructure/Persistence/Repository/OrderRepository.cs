@@ -2,7 +2,7 @@
 using Dario.Robles.Store.Service.Domain.Orders.Entities;
 using Dario.Robles.Store.Service.Domain.Orders.Interfaces;
 using Dario.Robles.Store.Service.Infraestructure.Persistence.Contexts;
-using Dario.Robles.Store.Service.Infrastructure.Persistence.Extensions;
+using Dario.Robles.Store.Service.Infraestructure.Persistence.Extensions;
 using Dario.Robles.Store.Service.Infrastructure.Persistence.Helpers.DataMapping.ModelMapping;
 using Dario.Robles.Store.Service.Infrastructure.Persistence.Helpers.Paged;
 using Microsoft.EntityFrameworkCore;

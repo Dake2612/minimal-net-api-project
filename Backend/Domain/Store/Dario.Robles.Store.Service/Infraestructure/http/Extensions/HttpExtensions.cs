@@ -1,4 +1,6 @@
-﻿using Dario.Robles.Store.Service.Infrastructure.Http.Helpers.LinksBuilders;
+﻿using Dario.Robles.Store.Service.Infraestructure.http.Helpers.LinksBuilders;
+using Dario.Robles.Store.Service.Infrastructure.Http.Extensions;
+using Dario.Robles.Store.Service.Infrastructure.Http.Helpers.LinksBuilders;
 
 namespace Dario.Robles.Store.Service.Infraestructure.http.Extensions
 {
@@ -8,8 +10,9 @@ namespace Dario.Robles.Store.Service.Infraestructure.http.Extensions
         {
             services.AddEndpointsApiExplorer();
             services.AddHttpContextAccessor();
-            services.AddSwaggerGen();
+            services.AddSwaggerDocumentation();
             services.AddScoped<IStoreLinksBuilder, StoreLinksBuilder>();
+            services.AddScoped<IItemLinksBuilder, ItemLinksBuilder>();
         }
     }
 }

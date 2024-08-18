@@ -3,6 +3,7 @@ using Dario.Robles.Store.Service.Infraestructure.Persistence.Contexts;
 using Dario.Robles.Store.Service.Infraestructure.Persistence.Repository;
 using Dario.Robles.Store.Service.Infraestructure.Persistence.UnitOfWork;
 using Dario.Robles.Store.Service.Infrastructure.Persistence.Helpers.DataMapping.ModelMapping;
+using Dario.Robles.Store.Service.Infrastructure.Persistence.Helpers.DataMapping.TypeHelper;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dario.Robles.Store.Service.Infraestructure.Persistence.Extensions
@@ -33,6 +34,7 @@ namespace Dario.Robles.Store.Service.Infraestructure.Persistence.Extensions
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<StoreUnitOfWork>();
             services.AddTransient<IOrderPropertyMappingService, OrderPropertyMappingService>();
+            services.AddScoped<ITypeHelperService, TypeHelperService>();
         }
     }
 }

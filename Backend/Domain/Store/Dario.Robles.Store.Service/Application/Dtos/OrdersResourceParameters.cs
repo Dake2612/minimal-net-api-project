@@ -11,6 +11,7 @@
         public string? State { get; set; } = "";
         public string? SearchQuery { get; set; } = "";
         public string? OrderBy { get; set; } = "Code";
+        public string? Fields { get; set; } = "";
 
         public int? PageNumber
         {

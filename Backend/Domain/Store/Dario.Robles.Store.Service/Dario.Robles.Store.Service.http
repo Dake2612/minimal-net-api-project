@@ -1,6 +1,16 @@
 @Dario.Robles.Store.Service_HostAddress = http://localhost:5209
 
-GET {{Dario.Robles.Store.Service_HostAddress}}/weatherforecast/
+GET {{Dario.Robles.Store.Service_HostAddress}}/api/orders
 Accept: application/json
 
 ###
+GET {{Dario.Robles.Store.Service_HostAddress}}/api/orders
+Accept: application/vnd.dario.hateoas+json
+
+###
+GET {{Dario.Robles.Store.Service_HostAddress}}/api/orders?fields=Code,State
+Accept: application/vnd.dario.hateoas+json
+
+###
+GET {{Dario.Robles.Store.Service_HostAddress}}/api/orders/1325360c-8253-473a-a20f-55c269c20407
+Accept: application/vnd.dario.hateoas+json

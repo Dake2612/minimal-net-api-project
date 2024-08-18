@@ -1,5 +1,6 @@
 ﻿using Dario.Robles.Store.Service.Infraestructure.http.Extensions;
 using Dario.Robles.Store.Service.Infraestructure.Persistence.Extensions;
+using Dario.Robles.Store.Service.Infrastructure.Security.Extensions;
 using Microsoft.AspNetCore.Builder;
 
 namespace Dario.Robles.Store.Service.Infraestructure.Extensions
@@ -17,6 +18,7 @@ namespace Dario.Robles.Store.Service.Infraestructure.Extensions
 
             services.AddHttp();
             services.AddPersistence(opt => opt.ConnectionString = options.ConnectionString);
+            services.AddSecurity();
         }
     }
 }

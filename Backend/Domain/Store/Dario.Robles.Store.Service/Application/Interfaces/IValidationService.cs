@@ -1,4 +1,5 @@
 ﻿using Dario.Robles.Store.Service.Application.Dtos;
+using Dario.Robles.Store.Service.Application.Validators;
 using FluentValidation.Results;
 
 namespace Dario.Robles.Store.Service.Application.Interfaces
@@ -7,5 +8,8 @@ namespace Dario.Robles.Store.Service.Application.Interfaces
     {
         ValidationResult ValidateOrderCreate(OrderForCreationDto dto);
         ValidationResult ValidateOrderUpdate(OrderForUpdateDto dto);
+        ValidationResult ValidateOrderResourceParameters(OrdersResourceParameters resource);
+        ValidationResult ValidateItemCreation(ItemForCreationDto dto);
+        ValidationResult ValidateItemUpdate(ItemForUpdateDto dto);
     }
 }
