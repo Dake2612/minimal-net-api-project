@@ -1,0 +1,17 @@
+<p>store-shell works!</p>
+
+<ul>
+  <li><a [routerLink]="['./orders']">List of orders</a></li>
+  <li><a [routerLink]="['./orders', 'new']">Add order</a></li>
+  <li><a [routerLink]="['./orders', 111 ]">Dario Detail</a></li>
+  <li><a [routerLink]="['./orders', 2222, 'edit']">Edit</a></li>
+</ul>
+
+<ul>
+  <li>
+    <a [routerLink]="['./orders', 3333]"
+       [queryParams]="{searchQuery:'test',orderBy:'Code'}">Dario Query</a>
+  </li>
+</ul>
+
+<router-outlet></router-outlet>

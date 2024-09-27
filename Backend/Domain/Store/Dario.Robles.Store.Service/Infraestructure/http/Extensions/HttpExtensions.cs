@@ -13,6 +13,7 @@ namespace Dario.Robles.Store.Service.Infraestructure.http.Extensions
             services.AddSwaggerDocumentation();
             services.AddScoped<IStoreLinksBuilder, StoreLinksBuilder>();
             services.AddScoped<IItemLinksBuilder, ItemLinksBuilder>();
+            services.AddAllowAllCORS();
         }
     }
 }

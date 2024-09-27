@@ -25,6 +25,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "keycloak", "keycloak", "{34
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dario.Robles.Security.Service", "Backend\Infraestructure\Security\Security.service\Dario.Robles.Security.Service.csproj", "{CC13B068-6ABA-4778-B775-EF73F6E45DCD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontEnd", "FrontEnd", "{447351C8-99BF-48BB-8B54-5B4F5C2256E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Angular", "Angular", "{1F15E24F-767B-44FE-8951-2D6926FF304C}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "dario-robles-ng", "FrontEnd\Angular\dario-robles-ng\dario-robles-ng.esproj", "{30E52625-45DA-46CB-8BB3-A656D7038E87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +55,12 @@ Global
 		{CC13B068-6ABA-4778-B775-EF73F6E45DCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC13B068-6ABA-4778-B775-EF73F6E45DCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC13B068-6ABA-4778-B775-EF73F6E45DCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30E52625-45DA-46CB-8BB3-A656D7038E87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30E52625-45DA-46CB-8BB3-A656D7038E87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30E52625-45DA-46CB-8BB3-A656D7038E87}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{30E52625-45DA-46CB-8BB3-A656D7038E87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30E52625-45DA-46CB-8BB3-A656D7038E87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30E52625-45DA-46CB-8BB3-A656D7038E87}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +75,8 @@ Global
 		{75EE41E5-B35F-4B73-8811-362C7D3E8680} = {36D57514-656B-447C-8F0F-C03B5742E389}
 		{344FEE28-2DDE-4360-A3FB-18B759AE8F68} = {A0AF8F61-4C75-4134-9078-C0467042ED10}
 		{CC13B068-6ABA-4778-B775-EF73F6E45DCD} = {A0AF8F61-4C75-4134-9078-C0467042ED10}
+		{1F15E24F-767B-44FE-8951-2D6926FF304C} = {447351C8-99BF-48BB-8B54-5B4F5C2256E8}
+		{30E52625-45DA-46CB-8BB3-A656D7038E87} = {1F15E24F-767B-44FE-8951-2D6926FF304C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F315B015-6A9B-492A-A108-0199632C5A79}

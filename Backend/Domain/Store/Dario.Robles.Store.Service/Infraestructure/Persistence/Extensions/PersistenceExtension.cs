@@ -21,7 +21,7 @@ namespace Dario.Robles.Store.Service.Infraestructure.Persistence.Extensions
             using (var scope = scopedFactory.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
-                //context.EnsureSeedDataForContext();
+                context.EnsureSeedDataForContext();
             }
         }
         public static void AddPersistence(this IServiceCollection services, Action<PersistenceOptions> configure)

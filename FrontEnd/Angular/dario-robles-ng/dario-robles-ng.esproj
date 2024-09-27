@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.271090-alpha">
+  <PropertyGroup>
+    <StartupCommand>npm start</StartupCommand>
+    <JavaScriptTestFramework>Jasmine</JavaScriptTestFramework>
+    <!-- Allows the build (or compile) script located on package.json to run on Build -->
+    <ShouldRunBuildScript>false</ShouldRunBuildScript>
+    <!-- Folder where production build objects will be placed -->
+    <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\dario-robles-ng\</BuildOutputFolder>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="public\config\" />
+    <Folder Include="src\app\business\application\mappers\" />
+    <Folder Include="src\app\business\application\use-cases\" />
+    <Folder Include="src\app\business\domain\repositories\" />
+    <Folder Include="src\app\core\guards\" />
+    <Folder Include="src\app\core\models\" />
+    <Folder Include="src\app\infraestructure\agents\orders\dtos\" />
+    <Folder Include="src\app\infraestructure\interceptors\" />
+    <Folder Include="src\app\infraestructure\keycloak\" />
+    <Folder Include="src\app\infraestructure\comunication\" />
+    <Folder Include="src\app\ui\main\pages\" />
+    <Folder Include="src\app\ui\security\components\" />
+    <Folder Include="src\app\ui\security\routes\" />
+    <Folder Include="src\app\ui\security\pages\" />
+    <Folder Include="src\app\ui\security\shell\components\" />
+    <Folder Include="src\app\ui\shared\components\message\" />
+    <Folder Include="src\app\ui\store\items\" />
+  </ItemGroup>
+</Project>

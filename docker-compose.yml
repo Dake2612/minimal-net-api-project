@@ -29,6 +29,8 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Password1234
+    volumes:
+      - ./Backend/Infraestructure/Database/mssql:/var/opt/mssql/data
     ports:
       - 1434:1433
     networks:

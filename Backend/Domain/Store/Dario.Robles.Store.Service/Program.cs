@@ -23,5 +23,6 @@ app.UseAuthorization();
 
 app.RegisterEndpoints();
 app.UseSeedData();
+app.UseAllowAllCORS();
 app.Run();
 
