@@ -3,6 +3,9 @@ import { ConfigService } from "./config.service";
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { AppUserAuth } from "../models/app-user-auth";
 import { catchError, firstValueFrom, map, throwError } from "rxjs";
+import { KeycloakService } from "../../infraestructure/keycloak/keycloak.service";
+import { KeycloakProfile } from "keycloak-js";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -10,47 +13,47 @@ import { catchError, firstValueFrom, map, throwError } from "rxjs";
 
 export class AuthService {
   public redirectUrl: string = '';
-  private _isAuthenticated: boolean = false;
-
+  private keycloakService = inject(KeycloakService);
+  private router = inject(Router);
   public appUserAuth = new AppUserAuth();
 
-  private authTokenUrl: string = '';
-  private configService = inject(ConfigService);
-  private http = inject(HttpClient);
-
   constructor() {
-    this.authTokenUrl = `${this.configService.getValue('KEYCLOAK_URL')}/realms/${this.configService.getValue('KEYCLOAK_REALM')}/protocol/openid-connect/token`;
     this.appUserAuth = this.getUserLoggedIn();
     this.setUserLoggedIn(this.appUserAuth);
   }
 
-  public async login(username: string, password: string): Promise<AppUserAuth> {
-    const body = new URLSearchParams();
-    body.set('grant_type', 'password');
-    body.set('client_id', this.configService.getValue('KEYCLOAK_CLIENT_ID'));
-    body.set('username', username);
-    body.set('password', password);
+  public async login(redirectUri: string): Promise<void> {
+    return this.keycloakService.login(redirectUri);
+  }
 
-    const options = {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+  public logout(): Promise<void> {
+    return this.keycloakService.logout(window.location.origin)
+      .then(() => {
+        this.appUserAuth = new AppUserAuth();
+        sessionStorage.removeItem('appUserAuth');
+        this.router.navigate(['/']);
+      });
+  }
+
+  public async getUserProfile(): Promise<KeycloakProfile> {
+    try {
+      return await this.keycloakService.getProfile();
+    } catch (error) {
+      console.error('Failed to get user profile', error);
+      throw error;
     }
-
-    return await firstValueFrom(this.http.post<AppUserAuth>(this.authTokenUrl, body.toString(), options)
-      .pipe(
-        map(appUserAuth => {
-          appUserAuth.isAuthenticated = true;
-          this.setUserLoggedIn(appUserAuth);
-          this.appUserAuth = appUserAuth;
-          return appUserAuth
-        }),
-        catchError(this.handleError)
-      )
-    )
   }
 
   private setUserLoggedIn(appUserAuth: AppUserAuth) {
-    this._isAuthenticated = appUserAuth.isAuthenticated;
     sessionStorage.setItem('appUserAuth', JSON.stringify(appUserAuth));
+  }
+
+  public async LoggedInFromKeycloak() {
+    this.appUserAuth = {
+      access_token: await this.keycloakService.getToken(),
+      refresh_token: this.keycloakService.getRefreshToken()
+    };
+    this.setUserLoggedIn(this.appUserAuth);
   }
 
   private getUserLoggedIn(): AppUserAuth {
@@ -59,19 +62,7 @@ export class AuthService {
     return appUserAuth;
   }
 
-  private handleError(error: HttpErrorResponse) {
-    console.error('server error: ', error);
-    if (error.error instanceof Error) {
-      const errMessage = error.error.message;
-      return throwError(() => errMessage);
-    }
-    return throwError(() => error || 'Server error');
-  }
-
-  public isAuthenticated(authenticated?: boolean): boolean {
-    if (authenticated !== undefined) {
-      this._isAuthenticated = authenticated;
-    }
-    return this._isAuthenticated;
+  public isAuthenticated(): boolean {
+    return this.keycloakService.isLoggedIn();
   }
 }

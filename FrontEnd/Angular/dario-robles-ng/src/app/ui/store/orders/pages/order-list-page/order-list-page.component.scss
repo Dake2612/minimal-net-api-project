@@ -1,0 +1,49 @@
+.container {
+  position: relative;
+}
+
+.table-card {
+  border: 1px solid #c4c6d0;
+  box-shadow: none;
+}
+
+.table-container {
+  position: relative;
+  max-height: calc(100vh - 522px);
+  overflow: auto;
+}
+
+.table {
+  width: 965px;
+}
+
+.loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 101;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rate-limit-reached {
+  max-width: 360px;
+  text-align: center;
+}
+
+
+@media screen and (max-width: 600px) {
+  .table-container {
+    max-height: calc(100vh - 484px);
+  }
+}
+
+@media (max-height: 738px) {
+  .table-container {
+    max-height: calc(100vh - 392px);
+  }
+}

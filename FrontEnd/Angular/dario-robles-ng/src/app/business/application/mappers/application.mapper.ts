@@ -8,3 +8,4 @@ export const applicationMapper: Mapper = createMapper({
 })
 
 createMap(applicationMapper, Order, OrderModel);
+createMap(applicationMapper, OrderModel, Order);

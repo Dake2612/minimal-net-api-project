@@ -1,13 +1,51 @@
-<p>order-edit-page works!</p>
+@if (orderId) {
+<h6>Edit Order</h6>
+}
+@else{
+<h6>New Order</h6>
+}
 
-<ul>
-  <li><a [routerLink]="['./info']">Info</a></li>
-  <li><a [routerLink]="['./items']">Items</a></li>
-</ul>
-
-<p>{{orderId}}</p>
-
-<p>order.orderId: {{order.OrderId}}</p>
-<p>order.code: {{order.Code}}</p>
-
-<router-outlet></router-outlet>
+<form [formGroup]="orderForm">
+  <div class="field-container">
+    <mat-form-field class="full-width">
+      <mat-label>Order ID</mat-label>
+      <input matInput formControlName="orderId">
+    </mat-form-field>
+  </div>
+  <div class="field-container">
+    <mat-form-field class="full-width">
+      <mat-label>Code</mat-label>
+      <input matInput formControlName="code">
+    </mat-form-field>
+  </div>
+  <div class="field-container">
+    <mat-form-field class="full-width">
+      <mat-label>Deliver Date</mat-label>
+      <input matInput [matDatepicker]="deliverPicker" formControlName="deliverAt">
+      <mat-datepicker-toggle matSuffix [for]="deliverPicker"></mat-datepicker-toggle>
+      <mat-datepicker #deliverPicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="field-container">
+    <mat-form-field class="full-width">
+      <mat-label>Create Date</mat-label>
+      <input matInput [matDatepicker]="createPicker" formControlName="createdAt">
+      <mat-datepicker-toggle matSuffix [for]="createPicker"></mat-datepicker-toggle>
+      <mat-datepicker #createPicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="filter-container">
+    <mat-form-field class="full-width">
+      <mat-label>State Filter</mat-label>
+      <mat-select formControlName="state">
+        @for (state of states | async; track state) {
+        <mat-option [value]="state">{{state}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="button-container">
+    <button class="save-button" mat-raised-button color="accent" type="submit" [disabled]="orderForm.invalid" (click)="saveOrder()">Save</button>
+    <button class="cancel-button" mat-raised-button type="button" (click)="cancelOrder()">Cancel</button>
+  </div>
+</form>

@@ -28,7 +28,7 @@ namespace Dario.Robles.Store.Service.Infraestructure.http.EndpointHandlers
                 return TypedResults.BadRequest();
             }
             var result = await _storeApplicationService.GetOrdersAsync(ordersResourceParameters);
-            _httpContextAccessor.HttpContext.Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(result.PaginationMetadata, new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping }));
+            _httpContextAccessor.HttpContext.Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(result.PaginationMetadata, new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping, PropertyNamingPolicy = JsonNamingPolicy.CamelCase}));
 
             switch (mediaType)
             {

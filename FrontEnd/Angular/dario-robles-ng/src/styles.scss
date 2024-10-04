@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use "../m3-theme.scss";
+@use "./app/ui/store/shell/layout/store-shell-component.theme";
+
+@include mat.core();
+
+$dario-robles-ng-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+$theme: m3-theme.$light-theme;
+
+:root {
+  @include mat.all-component-themes($theme);
+  @include store-shell-component.theme($theme);
+  @include mat.color-variants-backwards-compatibility($theme);
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.w-100 {
+    width: 100%;
+}

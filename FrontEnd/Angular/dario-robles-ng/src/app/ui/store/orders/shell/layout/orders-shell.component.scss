@@ -1,0 +1,24 @@
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.is-active {
+  color: #2a5ea7;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.content {
+  padding: 24px;
+}
+
+.card {
+  height: 100%;
+}

@@ -6,7 +6,11 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { APP_ROUTES } from '../../ui/main/routes/app.routes';
 import { provideRepositories } from '../../infraestructure/providers/repositories.provider';
 import { provideAppInitialize } from '../../infraestructure/providers/app-initializer.provider';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideKeycloak } from '../../infraestructure/providers/keycloak.provider';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from '../../infraestructure/interceptors/auth.interceptor';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideDateAdapter } from '../../infraestructure/providers/date-adapter.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,7 +18,10 @@ export const appConfig: ApplicationConfig = {
     provideRouter(APP_ROUTES, withHashLocation(), withComponentInputBinding()),
     provideClientHydration(),
     provideAppInitialize(),
-    provideHttpClient(withFetch()),
-    provideRepositories()
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    provideRepositories(),
+    provideKeycloak(),
+    provideDateAdapter(),
+    provideAnimationsAsync()
   ]
 };

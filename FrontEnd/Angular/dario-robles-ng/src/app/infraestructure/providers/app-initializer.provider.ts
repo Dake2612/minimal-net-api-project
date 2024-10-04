@@ -23,7 +23,7 @@ export function provideAppInitialize(): Provider {
   return {
     provide: APP_INITIALIZER,
     useFactory: initializeConfig,
-    deps: [ConfigService],
+    deps: [ConfigService, AuthService],
     multi: true
   };
 }

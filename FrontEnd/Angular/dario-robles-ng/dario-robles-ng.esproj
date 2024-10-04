@@ -9,12 +9,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="public\config\" />
+    <Folder Include="public\keycloak\" />
     <Folder Include="src\app\business\application\mappers\" />
     <Folder Include="src\app\business\application\use-cases\" />
     <Folder Include="src\app\business\domain\repositories\" />
     <Folder Include="src\app\core\guards\" />
     <Folder Include="src\app\core\models\" />
-    <Folder Include="src\app\infraestructure\agents\orders\dtos\" />
     <Folder Include="src\app\infraestructure\interceptors\" />
     <Folder Include="src\app\infraestructure\keycloak\" />
     <Folder Include="src\app\infraestructure\comunication\" />
@@ -25,5 +25,6 @@
     <Folder Include="src\app\ui\security\shell\components\" />
     <Folder Include="src\app\ui\shared\components\message\" />
     <Folder Include="src\app\ui\store\items\" />
+    <Folder Include="src\app\ui\store\orders\shell\components\" />
   </ItemGroup>
 </Project>

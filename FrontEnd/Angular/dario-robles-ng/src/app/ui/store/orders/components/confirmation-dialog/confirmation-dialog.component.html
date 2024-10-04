@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Are you sure?</h2>
+<div mat-dialog-content>
+  Do you really want to delete this order, {{data.order.Code}}?
+</div>
+<div mat-dialog-actions class="align-right">
+  <button color="primary" mat-raised-button (click)="closeDialog(false)" cdkFocusInitial>No</button>
+  <button color="warn" mat-raised-button (click)="closeDialog(true)">Yes</button>
+</div>

@@ -29,18 +29,18 @@ export class LoginPageComponent implements OnInit{
     const username = this.loginForm.value.username;
     const password = this.loginForm.value.password;
 
-    const auth = await this.authService.login(username, password);
+    //const auth = await this.authService.login(username, password);
 
-    if (auth.isAuthenticated) {
-      if (this.authService.redirectUrl) {
-        const redirectUrl = this.authService.redirectUrl;
-        this.authService.redirectUrl = '';
-        this.router.navigate([redirectUrl]);
-      } else {
-        this.router.navigate(['/welcome']);
-      }
-    } else {
-      console.log('Login failed');
-    }
+    //if (auth.isAuthenticated) {
+    //  if (this.authService.redirectUrl) {
+    //    const redirectUrl = this.authService.redirectUrl;
+    //    this.authService.redirectUrl = '';
+    //    this.router.navigate([redirectUrl]);
+    //  } else {
+    //    this.router.navigate(['/welcome']);
+    //  }
+    //} else {
+    //  console.log('Login failed');
+    //}
   }
 }
